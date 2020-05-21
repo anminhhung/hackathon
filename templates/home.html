@@ -358,15 +358,15 @@ nav.shift ul li a:hover:after {
      <img src="{{ url_for('static',filename='images/logo.png') }}">
     </div>
 	
-    <form method=post enctype=multipart/form-data> 
-        <div class="input-group">
+     <form method=post enctype=multipart/form-data> 
+        <!--<div class="input-group">
             <span class="input-group-addon">Please select category:</span>
                 <select name="categories" class="selectpicker form-control">
                   {% for o in data %}
                   <option value="{{ o.categ }}">{{ o.categ }}</option>
                   {% endfor %}
                 </select>
-        </div><br><br>
+        </div><br><br> -->
 		<input type=file name=file /><br><br>
         <button type=submit class='large red button'>Upload and See Recommendation</button>
 
