@@ -1,0 +1,9 @@
+{% extends "home.html" %}
+{% block body %}
+<center> <p style="color:green"><b>Let's see your result.</b><br></p> </center>
+<center><img src="{{ url_for('static',filename='output_images/1.jpg') }}" max-with=300 /></center>
+<center><img src="{{ url_for('static',filename='output_images/2.jpg') }}"   max-with=300 /></center>
+<center><img src="{{ url_for('static',filename='output_images/3.jpg') }}"  max-with=300 /></center>  
+<center><img src="{{ url_for('static',filename='output_images/4.jpg') }}"  max-with=300 /></center>
+<center><img src="{{ url_for('static',filename='output_images/5.jpg') }}"  max-with=300 /></center>
+{% endblock %}

@@ -1,18 +1,22 @@
 from flask import Flask,render_template, request, flash, request, redirect, url_for, send_from_directory
 import os
+from utils import *
 from PIL import Image
 from flask_scss import Scss
 from werkzeug.utils import secure_filename
+import utils
+
 app = Flask(__name__)
-UPLOAD_FOLDER = 'static/images'
+UPLOAD_FOLDER = 'img/2-in-1_Space_Dye_Athletic_Tank/'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
-INPUT_FILE_NAME = "input.jpg"
+# INPUT_FILE_NAME = "input.jpg"
 OUTPUT_FILE_NAME = "output.jpg"
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.secret_key = 'super secret key'
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+
 # No caching at all for API endpoints.
 @app.after_request
 def add_header(response):
@@ -21,6 +25,7 @@ def add_header(response):
     response.headers['Pragma'] = 'no-cache'
     response.headers['Expires'] = '-1'
     return response
+
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -34,15 +39,22 @@ def home():
             flash('No file part')
             return redirect(request.url)
         file = request.files['file']
-        # if user does not select file, browser also
+        # if user does not select file, browser alsos
         # submit an empty part without filename
         if file.filename == '':
             flash('No selected file')
             return redirect(request.url)
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            input_file_path = os.path.join(app.config['UPLOAD_FOLDER'], INPUT_FILE_NAME)
+            input_file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            print("input_file_path: ", input_file_path)
             file.save(input_file_path)
+            '''
+                Input: image
+                output: out_images folder
+            '''
+            my_path = utils.recommend(input_file_path)
+            return render_template("success.html")
 
     return render_template("home.html", data=[{'categ':'categ1'}, {'categ':'categ2'}])
 
@@ -58,4 +70,4 @@ def uploaded_file(filename):
                                filename)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
